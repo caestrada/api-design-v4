@@ -1,19 +1,18 @@
 import { Router } from 'express';
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
 import { handleInputErrors } from './modules/middleware';
+import { createProduct, deleteProduct, getOneProduct, getProducts } from './handlers/product';
 
 const router = Router();
 
 /**
  * Product
  */
-router.get('/product', (req, res) => {
-  res.status(200).json({ message: 'Hello, world!' });
-});
-router.get('/product/:id', (req, res) => {});
+router.get('/product', getProducts);
+router.get('/product/:id', getOneProduct);
 router.put('/product/:id', body('name').isString(), handleInputErrors, (req, res) => {});
-router.post('/product', body('name').isString(), handleInputErrors, (req, res) => {});
-router.delete('/product/:id', (req, res) => {});
+router.post('/product', body('name').isString(), handleInputErrors, createProduct);
+router.delete('/product/:id', deleteProduct);
 
 /**
  * Update
